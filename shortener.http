@@ -1,0 +1,25 @@
+### Getting some code
+POST http://localhost:8000
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "url": "https://google.com"
+}
+
+> {%
+  client.global.set("code", response.body.code);
+  client.test("Successful request", function () {
+      client.assert(response.status === 201, "Request status is not 201")
+  });
+%}
+
+### Test the code
+GET http://localhost:8000/{{code}}
+
+> {%
+  client.test("Successful request", function () {
+      client.assert(response.status === 200, "Request status is not 200")
+  });
+%}

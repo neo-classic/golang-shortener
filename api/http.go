@@ -17,16 +17,16 @@ type RedirectHandler interface {
 }
 
 type handler struct {
-	redirectService shortener.ServiceRedirecter
+	redirectService shortener.Service
 }
 
-func NewHandler(redirectService shortener.ServiceRedirecter) RedirectHandler {
+func NewHandler(redirectService shortener.Service) RedirectHandler {
 	return &handler{
 		redirectService: redirectService,
 	}
 }
 
-func (h *handler) serializer(contentType string) shortener.RedirectSerializer {
+func (h *handler) serializer(contentType string) shortener.Serializer {
 	if contentType == "application/x-msgpack" {
 		return &msgpack.Redirect{}
 	}

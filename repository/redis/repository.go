@@ -27,7 +27,7 @@ func newRedisClient(redisURL string) (*redis.Client, error) {
 	return client, nil
 }
 
-func NewRedisRepository(redisURL string) (shortener.RepositoryRedirecter, error) {
+func NewRedisRepository(redisURL string) (shortener.Repository, error) {
 	repo := &redisRepository{}
 	client, err := newRedisClient(redisURL)
 	if err != nil {
@@ -53,7 +53,7 @@ func (r *redisRepository) Find(code string) (*shortener.Redirect, error) {
 		return nil, errors.Wrap(shortener.ErrRedirectNotFound, "repository.Find")
 	}
 
-	createdAt, err := strconv.ParseInt(data["crated_at"], 10, 64)
+	createdAt, err := strconv.ParseInt(data["created_at"], 10, 64)
 	if err != nil {
 		return nil, errors.Wrap(err, "repository.Find.ParseInt")
 	}
